@@ -152,6 +152,18 @@ public class VisitorPassController {
             sheet.setColumnWidth(7, 5000);
             sheet.setColumnWidth(8, 5000);
             sheet.setColumnWidth(9, 5000);
+            sheet.setColumnWidth(10, 5000);
+            sheet.setColumnWidth(11, 5000);
+            sheet.setColumnWidth(12, 5000);
+            sheet.setColumnWidth(13, 5000);
+            sheet.setColumnWidth(14, 5000);
+            sheet.setColumnWidth(15, 5000);
+            sheet.setColumnWidth(16, 5000);
+            sheet.setColumnWidth(17, 5000);
+            sheet.setColumnWidth(18, 5000);
+            sheet.setColumnWidth(19, 5000);
+
+
 
 
 
@@ -164,7 +176,19 @@ public class VisitorPassController {
             Cell cell6 = row0.createCell(6);
             Cell cell7 = row0.createCell(7);
             Cell cell8 = row0.createCell(8);
-            Cell cell9= row0.createCell(9);
+            Cell cell9 = row0.createCell(9);
+            Cell cell10 = row0.createCell(10);
+            Cell cell11 = row0.createCell(11);
+            Cell cell12= row0.createCell(12);
+            Cell cell13 = row0.createCell(13);
+            Cell cell14 = row0.createCell(14);
+            Cell cell15 = row0.createCell(15);
+            Cell cell16 = row0.createCell(16);
+            Cell cell17 = row0.createCell(17);
+            Cell cell18= row0.createCell(18);
+            Cell cell19= row0.createCell(19);
+
+
 
 
 
@@ -178,61 +202,118 @@ public class VisitorPassController {
             cell7.setCellStyle(style0);
             cell8.setCellStyle(style0);
             cell9.setCellStyle(style0);
+            cell10.setCellStyle(style0);
+            cell11.setCellStyle(style0);
+            cell12.setCellStyle(style0);
+            cell13.setCellStyle(style0);
+            cell14.setCellStyle(style0);
+            cell15.setCellStyle(style0);
+            cell16.setCellStyle(style0);
+            cell17.setCellStyle(style0);
+            cell18.setCellStyle(style0);
+            cell19.setCellStyle(style0);
+
+
+
 
 
 
             cell0.setCellValue("name");
             cell1.setCellValue("phone_no");
             cell2.setCellValue("email");
-            cell3.setCellValue("location");
-            cell4.setCellValue("purpose_of_visit");
-            cell5.setCellValue("whom_to_meet");
-            cell6.setCellValue("date");
-            cell7.setCellValue("status");
-            cell8.setCellValue("check_in");
-            cell9.setCellValue("check_out");
+
+            cell3.setCellValue("purpose_of_visit");
+            cell4.setCellValue("whom_to_meet");
+            cell5.setCellValue("date");
+            cell6.setCellValue("status");
+            cell7.setCellValue("check_in");
+            cell8.setCellValue("check_out");
+            cell9.setCellValue("gender");
+            cell10.setCellValue("profession");
+            cell11.setCellValue("department");
+            cell12.setCellValue("nationality");
+            cell13.setCellValue("pass_no");
+            cell14.setCellValue("id_type");
+            cell15.setCellValue("id_no");
+            cell16.setCellValue("no_of_visitors");
+            cell17.setCellValue("address");
+            cell18.setCellValue("item_carried");
+            cell19.setCellValue("serial_no");
 
 
             int j = 1;
             for (VisitorPass visitorPass : visitorPassList) {
 
                 Row row1 = sheet.createRow(j++);
-                Cell cell11 = row1.createCell(0);
-                Cell cell12 = row1.createCell(1);
-                Cell cell13 = row1.createCell(2);
-
-                Cell cell14 = row1.createCell(3);
-                Cell cell15 = row1.createCell(4);
-                Cell cell16 = row1.createCell(5);
-                Cell cell17 = row1.createCell(6);
-                Cell cell18 = row1.createCell(7);
-                Cell cell19 = row1.createCell(8);
-                Cell cell20 = row1.createCell(9);
-
-
-                cell11.setCellStyle(style1);
-                cell12.setCellStyle(style1);
-                cell13.setCellStyle(style1);
-                cell14.setCellStyle(style1);
-                cell15.setCellStyle(style1);
-                cell16.setCellStyle(style1);
-                cell17.setCellStyle(style1);
-                cell18.setCellStyle(style1);
-                cell19.setCellStyle(style1);
-                cell20.setCellStyle(style1);
+                Cell cell111= row1.createCell(0);
+                Cell cell121 = row1.createCell(1);
+                Cell cell131 = row1.createCell(2);
+                Cell cell141 = row1.createCell(3);
+                Cell cell151 = row1.createCell(4);
+                Cell cell161 = row1.createCell(5);
+                Cell cell171 = row1.createCell(6);
+                Cell cell181 = row1.createCell(7);
+                Cell cell191 = row1.createCell(8);
+                Cell cell201 = row1.createCell(9);
+                Cell cell21 = row1.createCell(10);
+                Cell cell22 = row1.createCell(11);
+                Cell cell23 = row1.createCell(12);
+                Cell cell24 = row1.createCell(13);
+                Cell cell25= row1.createCell(14);
+                Cell cell26 = row1.createCell(15);
+                Cell cell27 = row1.createCell(16);
+                Cell cell28 = row1.createCell(17);
+                Cell cell29 = row1.createCell(18);
+                Cell cell30 = row1.createCell(19);
 
 
-                cell11.setCellValue(visitorPass.getName());
-                cell12.setCellValue(visitorPass.getPhone_no());
-                cell13.setCellValue(visitorPass.getEmail());
 
-                cell14.setCellValue(visitorPass.getLocation());
-                cell15.setCellValue(visitorPass.getPurpose_of_visit());
-                cell16.setCellValue(visitorPass.getWhom_to_meet());
-                cell17.setCellValue(visitorPass.getDate());
-                cell18.setCellValue(visitorPass.getStatus());
-                cell19.setCellValue(visitorPass.getCheck_in());
-                cell20.setCellValue(visitorPass.getCheck_out());
+
+
+                cell111.setCellStyle(style1);
+                cell121.setCellStyle(style1);
+                cell131.setCellStyle(style1);
+                cell141.setCellStyle(style1);
+                cell151.setCellStyle(style1);
+                cell161.setCellStyle(style1);
+                cell171.setCellStyle(style1);
+                cell181.setCellStyle(style1);
+                cell191.setCellStyle(style1);
+                cell201.setCellStyle(style1);
+                cell21.setCellStyle(style1);
+                cell22.setCellStyle(style1);
+                cell23.setCellStyle(style1);
+                cell24.setCellStyle(style1);
+                cell25.setCellStyle(style1);
+                cell26.setCellStyle(style1);
+                cell27.setCellStyle(style1);
+                cell28.setCellStyle(style1);
+                cell29.setCellStyle(style1);
+                cell30.setCellStyle(style1);
+
+
+
+                cell111.setCellValue(visitorPass.getName());
+                cell121.setCellValue(visitorPass.getPhone_no());
+                cell131.setCellValue(visitorPass.getEmail());
+                cell141.setCellValue(visitorPass.getPurpose_of_visit());
+                cell151.setCellValue(visitorPass.getWhom_to_meet());
+                cell161.setCellValue(visitorPass.getDate());
+                cell171.setCellValue(visitorPass.getStatus());
+                cell181.setCellValue(visitorPass.getCheck_in());
+                cell191.setCellValue(visitorPass.getCheck_out());
+                cell201.setCellValue(visitorPass.getGender());
+                cell21.setCellValue(visitorPass.getProfession());
+                cell22.setCellValue(visitorPass.getDepartment());
+                cell23.setCellValue(visitorPass.getNationality());
+                cell24.setCellValue(visitorPass.getPass_no());
+                cell25.setCellValue(visitorPass.getId_type());
+                cell26.setCellValue(visitorPass.getId_no());
+                cell27.setCellValue(visitorPass.getNo_of_visitors());
+                cell28.setCellValue(visitorPass.getAddress());
+                cell29.setCellValue(visitorPass.getItem_carried());
+                cell30.setCellValue(visitorPass.getSerial_no());
+
 
             }
         } catch (Exception e) {
@@ -255,6 +336,17 @@ public class VisitorPassController {
             sheet.setColumnWidth(7, 5000);
             sheet.setColumnWidth(8, 5000);
             sheet.setColumnWidth(9, 5000);
+            sheet.setColumnWidth(10, 5000);
+            sheet.setColumnWidth(11, 5000);
+            sheet.setColumnWidth(12, 5000);
+            sheet.setColumnWidth(13, 5000);
+            sheet.setColumnWidth(14, 5000);
+            sheet.setColumnWidth(15, 5000);
+            sheet.setColumnWidth(16, 5000);
+            sheet.setColumnWidth(17, 5000);
+            sheet.setColumnWidth(18, 5000);
+            sheet.setColumnWidth(19, 5000);
+
 
 
             Cell cell0 = row0.createCell(0);
@@ -266,7 +358,19 @@ public class VisitorPassController {
             Cell cell6 = row0.createCell(6);
             Cell cell7 = row0.createCell(7);
             Cell cell8 = row0.createCell(8);
-            Cell cell9 = row0.createCell(9);
+            Cell cell9= row0.createCell(9);
+            Cell cell10 = row0.createCell(10);
+            Cell cell11= row0.createCell(11);
+            Cell cell12= row0.createCell(12);
+            Cell cell13= row0.createCell(13);
+            Cell cell14= row0.createCell(14);
+            Cell cell15= row0.createCell(15);
+            Cell cell16= row0.createCell(16);
+            Cell cell17= row0.createCell(17);
+            Cell cell18 = row0.createCell(18);
+            Cell cell19 = row0.createCell(19);
+
+
 
 
             cell0.setCellStyle(style0);
@@ -279,60 +383,114 @@ public class VisitorPassController {
             cell7.setCellStyle(style0);
             cell8.setCellStyle(style0);
             cell9.setCellStyle(style0);
+            cell10.setCellStyle(style0);
+            cell11.setCellStyle(style0);
+            cell12.setCellStyle(style0);
+            cell13.setCellStyle(style0);
+            cell14.setCellStyle(style0);
+            cell15.setCellStyle(style0);
+            cell16.setCellStyle(style0);
+            cell17.setCellStyle(style0);
+            cell18.setCellStyle(style0);
+            cell19.setCellStyle(style0);
+
 
 
             cell0.setCellValue("name");
             cell1.setCellValue("phone_no");
             cell2.setCellValue("email");
-            cell3.setCellValue("location");
-            cell4.setCellValue("purpose_of_visit");
-            cell5.setCellValue("whom_to_meet");
-            cell6.setCellValue("date");
-            cell7.setCellValue("status");
-            cell8.setCellValue("check_in");
-            cell9.setCellValue("check_out");
+
+            cell3.setCellValue("purpose_of_visit");
+            cell4.setCellValue("whom_to_meet");
+            cell5.setCellValue("date");
+            cell6.setCellValue("status");
+            cell7.setCellValue("check_in");
+            cell8.setCellValue("check_out");
+            cell9.setCellValue("gender");
+            cell10.setCellValue("profession");
+            cell11.setCellValue("department");
+            cell12.setCellValue("nationality");
+            cell13.setCellValue("pass_no");
+            cell14.setCellValue("id_type");
+            cell15.setCellValue("id_no");
+            cell16.setCellValue("no_of_visitors");
+            cell17.setCellValue("address");
+            cell18.setCellValue("item_carried");
+            cell19.setCellValue("serial_no");
 
 
             int j = 1;
             for (VisitorPass visitorPass : getVisitor) {
 
                 Row row1 = sheet.createRow(j++);
-                Cell cell11 = row1.createCell(0);
-                Cell cell12 = row1.createCell(1);
-                Cell cell13 = row1.createCell(2);
-                Cell cell14 = row1.createCell(3);
-                Cell cell15 = row1.createCell(4);
-                Cell cell16 = row1.createCell(5);
-                Cell cell17 = row1.createCell(6);
-                Cell cell18 = row1.createCell(7);
-                Cell cell19 = row1.createCell(8);
-                Cell cell20 = row1.createCell(9);
+                Cell cell111 = row1.createCell(0);
+                Cell cell121 = row1.createCell(1);
+                Cell cell131 = row1.createCell(2);
+                Cell cell141 = row1.createCell(3);
+                Cell cell151 = row1.createCell(4);
+                Cell cell161 = row1.createCell(5);
+                Cell cell171 = row1.createCell(6);
+                Cell cell181= row1.createCell(7);
+                Cell cell191 = row1.createCell(8);
+                Cell cell201= row1.createCell(9);
+                Cell cell211 = row1.createCell(10);
+                Cell cell221 = row1.createCell(11);
+                Cell cell231= row1.createCell(12);
+                Cell cell241 = row1.createCell(13);
+                Cell cell251= row1.createCell(14);
+                Cell cell261 = row1.createCell(15);
+                Cell cell271 = row1.createCell(16);
+                Cell cell281 = row1.createCell(17);
+                Cell cell291 = row1.createCell(18);
+                Cell cell301 = row1.createCell(19);
 
 
 
-                cell11.setCellStyle(style1);
-                cell12.setCellStyle(style1);
-                cell13.setCellStyle(style1);
-                cell14.setCellStyle(style1);
-                cell15.setCellStyle(style1);
-                cell16.setCellStyle(style1);
-                cell17.setCellStyle(style1);
-                cell18.setCellStyle(style1);
-                cell19.setCellStyle(style1);
-                cell20.setCellStyle(style1);
+
+                cell111.setCellStyle(style1);
+                cell121.setCellStyle(style1);
+                cell131.setCellStyle(style1);
+                cell141.setCellStyle(style1);
+                cell151.setCellStyle(style1);
+                cell161.setCellStyle(style1);
+                cell171.setCellStyle(style1);
+                cell181.setCellStyle(style1);
+                cell191.setCellStyle(style1);
+                cell201.setCellStyle(style1);
+                cell211.setCellStyle(style1);
+                cell221.setCellStyle(style1);
+                cell231.setCellStyle(style1);
+                cell241.setCellStyle(style1);
+                cell251.setCellStyle(style1);
+                cell261.setCellStyle(style1);
+                cell271.setCellStyle(style1);
+                cell281.setCellStyle(style1);
+                cell291.setCellStyle(style1);
+                cell301.setCellStyle(style1);
 
 
-                cell11.setCellValue(visitorPass.getName());
-                cell12.setCellValue(visitorPass.getPhone_no());
-                cell13.setCellValue(visitorPass.getEmail());
-                cell14.setCellValue(visitorPass.getLocation());
-                cell15.setCellValue(visitorPass.getPurpose_of_visit());
 
-                cell16.setCellValue(visitorPass.getWhom_to_meet());
-                cell17.setCellValue(visitorPass.getDate());
-                cell18.setCellValue(visitorPass.getStatus());
-                cell19.setCellValue(visitorPass.getCheck_in());
-                cell20.setCellValue(visitorPass.getCheck_out());
+
+                cell111.setCellValue(visitorPass.getName());
+                cell121.setCellValue(visitorPass.getPhone_no());
+                cell131.setCellValue(visitorPass.getEmail());
+                cell141.setCellValue(visitorPass.getPurpose_of_visit());
+                cell151.setCellValue(visitorPass.getWhom_to_meet());
+                cell161.setCellValue(visitorPass.getDate());
+                cell171.setCellValue(visitorPass.getStatus());
+                cell181.setCellValue(visitorPass.getCheck_in());
+                cell191.setCellValue(visitorPass.getCheck_out());
+                cell201.setCellValue(visitorPass.getGender());
+                cell211.setCellValue(visitorPass.getProfession());
+                cell221.setCellValue(visitorPass.getDepartment());
+                cell231.setCellValue(visitorPass.getNationality());
+                cell241.setCellValue(visitorPass.getPass_no());
+                cell251.setCellValue(visitorPass.getId_type());
+                cell261.setCellValue(visitorPass.getId_no());
+                cell271.setCellValue(visitorPass.getNo_of_visitors());
+                cell281.setCellValue(visitorPass.getAddress());
+                cell291.setCellValue(visitorPass.getItem_carried());
+                cell301.setCellValue(visitorPass.getSerial_no());
 
             }
         } catch (Exception e) {
@@ -449,8 +607,13 @@ public class VisitorPassController {
             message="inserted";
             String visitor="{\"name\":\""+visitorPass.getName()+"\",\"phone_no\":\""+visitorPass.getPhone_no()+"\"" +
                     ",\"whom_to_meet\":\""+visitorPass.getWhom_to_meet()+"\",\"purpose_of_visit\":\""+visitorPass.getPurpose_of_visit()+"\"" +
-                    ",\"location\":\""+visitorPass.getLocation()+"\",\"email\":\""+visitorPass.getEmail()+"\"" +
-                    ",\"id\":\""+visitorPass1.getId()+"\"}";
+                    ",\"email\":\""+visitorPass.getEmail()+"\"" +
+                    ",\"id\":\""+visitorPass1.getId()+"\",\"gender\":\""+visitorPass.getGender()+"\"," +
+                    "\"profession\":\""+visitorPass.getProfession()+"\",\"department\":\""+visitorPass.getDepartment()+"\"," +
+                    "\"nationality\":\""+visitorPass.getNationality()+"\",\"pass_no\":\""+visitorPass.getPass_no()+"\"," +
+                    "\"id_type\":\""+visitorPass.getId_type()+"\",\"id_no\":\""+visitorPass.getId_no()+"\"," +
+                    "\"no_of_visitors\":\""+visitorPass.getNo_of_visitors()+"\",\"address\":\""+visitorPass.getAddress()+"\"," +
+                    "\"item_carried\":\""+visitorPass.getItem_carried()+"\",\"serial_no\":\""+visitorPass.getSerial_no()+"\"}";
 
             QRCodeGenerator.generateQRCodeImage(visitor, 200,
                     200, "./src/main/resources/"+visitorPass.getName()+".png");
