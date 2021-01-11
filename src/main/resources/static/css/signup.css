@@ -1,0 +1,6 @@
+.background{
+    background: url("../images/back.jpg");
+    height:750px;
+    width:100%;
+    background-size: cover;
+}
