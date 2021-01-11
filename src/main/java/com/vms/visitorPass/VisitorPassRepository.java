@@ -33,4 +33,10 @@ public interface VisitorPassRepository extends MongoRepository<VisitorPass,Strin
     @Query("{'status':?0}")
    List<VisitorPass>getCloseStatus(String status);
 
+    @Query("{'phone_no':?0}")
+    List<VisitorPass>getPhoneNo(String phone_no);
+
+    @Query("{'id':?0,'status':?1}")
+    List<VisitorPass>getDetails(String id,String status);
+
 }

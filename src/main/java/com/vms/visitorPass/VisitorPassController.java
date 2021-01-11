@@ -1,6 +1,7 @@
 package com.vms.visitorPass;
 
 import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.encoder.QRCode;
 import com.vms.QrCode.QrCode;
 import com.vms.QrCode.QrcodeRepository;
 import com.vms.carrier.Carrier;
@@ -8,9 +9,11 @@ import com.vms.code.QRCodeGenerator;
 import com.vms.packageTracking.PackageTracking;
 import com.vms.walkin.Walkin;
 import com.vms.walkin.WalkinRepository;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.util.IOUtils;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +22,29 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
+@EnableWebMvc
 public class VisitorPassController {
     @Autowired
     VisitorPassRepository visitorPassRepository;
@@ -42,61 +55,10 @@ public class VisitorPassController {
     @Autowired
     QrcodeRepository qrcodeRepository;
 
-   /* @PostMapping("insertVisitor")
-    public String insertVisitor(@RequestBody VisitorPass visitorPass) {
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
-        String message = "UnSuccessful";
-        visitorPass.setMeeting_date(sdf.format(date));
-        visitorPass.setMeeting_time(sdf2.format(date));
-        VisitorPass visitorPass1 = visitorPassRepository.save(visitorPass);
-        if (!visitorPass1.getId().isEmpty()) {
-            message = "Successful";
-        }
-        return message;
-    }
-
-    @GetMapping("getTodayCheckIn")
-    public Map<String, Integer> getTodayCheckIn() {
-        Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        List<VisitorPass> list = visitorPassRepository.getTodayCheckIn(sdf.format(date));
-        HashMap<String, Integer> hMap = new HashMap<>();
-        hMap.put("data", list.size());
-        return hMap;
-
-    }
-
-    @GetMapping("getAllVisitor")
-    public Map<String, Integer> getAllVisitor() {
-        List<VisitorPass> list = visitorPassRepository.findAll();
-        HashMap<String, Integer> hMap = new HashMap<>();
-        hMap.put("visitor", list.size());
-        return hMap;
-    }
-    @GetMapping("getActiveCheckIn")
-    public Map<String,Integer>getActiveCheckIn() throws ParseException {
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<VisitorPass> list1 = visitorPassRepository.getActiveCheckIn(sdf.format(date));
-        int count=0;
-        for (VisitorPass visitorPass : list1) {
-           Date d1=sdf1.parse(visitorPass.getExpected_check_out());
-           long dif=date.getTime()-d1.getTime();
-            if (dif<0){
-                count++;
-            }
-        }
-        HashMap<String, Integer> hMap = new HashMap<>();
-        hMap.put("ActiveCheckIn", count);
-        return hMap;
-    }*/
 
     @GetMapping("uploadExcel")
-    public void createOrderSheet(HttpServletResponse response1,@RequestParam("date")String date,
-                                 @RequestParam("to")String to) throws IOException {
+    public void createOrderSheet(HttpServletResponse response1, @RequestParam("date") String date,
+                                 @RequestParam("to") String to) throws IOException {
         Workbook workbook = new HSSFWorkbook();
         HSSFCellStyle style1 = (HSSFCellStyle) workbook.createCellStyle();
         CellStyle style0 = workbook.createCellStyle();
@@ -131,11 +93,10 @@ public class VisitorPassController {
         style1.setWrapText(true);
 
 
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf1= new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 
-        List<VisitorPass> visitorPassList = visitorPassRepository.getExcel(date,to);
+        List<VisitorPass> visitorPassList = visitorPassRepository.getExcel(date, to);
 
         try {
             Sheet sheet = workbook.createSheet("Visitor Pass");
@@ -164,9 +125,6 @@ public class VisitorPassController {
             sheet.setColumnWidth(19, 5000);
 
 
-
-
-
             Cell cell0 = row0.createCell(0);
             Cell cell1 = row0.createCell(1);
             Cell cell2 = row0.createCell(2);
@@ -179,17 +137,14 @@ public class VisitorPassController {
             Cell cell9 = row0.createCell(9);
             Cell cell10 = row0.createCell(10);
             Cell cell11 = row0.createCell(11);
-            Cell cell12= row0.createCell(12);
+            Cell cell12 = row0.createCell(12);
             Cell cell13 = row0.createCell(13);
             Cell cell14 = row0.createCell(14);
             Cell cell15 = row0.createCell(15);
             Cell cell16 = row0.createCell(16);
             Cell cell17 = row0.createCell(17);
-            Cell cell18= row0.createCell(18);
-            Cell cell19= row0.createCell(19);
-
-
-
+            Cell cell18 = row0.createCell(18);
+            Cell cell19 = row0.createCell(19);
 
 
             cell0.setCellStyle(style0);
@@ -212,10 +167,6 @@ public class VisitorPassController {
             cell17.setCellStyle(style0);
             cell18.setCellStyle(style0);
             cell19.setCellStyle(style0);
-
-
-
-
 
 
             cell0.setCellValue("name");
@@ -245,7 +196,7 @@ public class VisitorPassController {
             for (VisitorPass visitorPass : visitorPassList) {
 
                 Row row1 = sheet.createRow(j++);
-                Cell cell111= row1.createCell(0);
+                Cell cell111 = row1.createCell(0);
                 Cell cell121 = row1.createCell(1);
                 Cell cell131 = row1.createCell(2);
                 Cell cell141 = row1.createCell(3);
@@ -259,15 +210,12 @@ public class VisitorPassController {
                 Cell cell22 = row1.createCell(11);
                 Cell cell23 = row1.createCell(12);
                 Cell cell24 = row1.createCell(13);
-                Cell cell25= row1.createCell(14);
+                Cell cell25 = row1.createCell(14);
                 Cell cell26 = row1.createCell(15);
                 Cell cell27 = row1.createCell(16);
                 Cell cell28 = row1.createCell(17);
                 Cell cell29 = row1.createCell(18);
                 Cell cell30 = row1.createCell(19);
-
-
-
 
 
                 cell111.setCellStyle(style1);
@@ -290,7 +238,6 @@ public class VisitorPassController {
                 cell28.setCellStyle(style1);
                 cell29.setCellStyle(style1);
                 cell30.setCellStyle(style1);
-
 
 
                 cell111.setCellValue(visitorPass.getName());
@@ -320,7 +267,7 @@ public class VisitorPassController {
             e.printStackTrace();
         }
 
-        List<VisitorPass> getVisitor =visitorPassRepository.findAll();
+        List<VisitorPass> getVisitor = visitorPassRepository.findAll();
         try {
             Sheet sheet = workbook.createSheet("All Visitor List");
             Row row0 = sheet.createRow(0);
@@ -348,7 +295,6 @@ public class VisitorPassController {
             sheet.setColumnWidth(19, 5000);
 
 
-
             Cell cell0 = row0.createCell(0);
             Cell cell1 = row0.createCell(1);
             Cell cell2 = row0.createCell(2);
@@ -358,19 +304,17 @@ public class VisitorPassController {
             Cell cell6 = row0.createCell(6);
             Cell cell7 = row0.createCell(7);
             Cell cell8 = row0.createCell(8);
-            Cell cell9= row0.createCell(9);
+            Cell cell9 = row0.createCell(9);
             Cell cell10 = row0.createCell(10);
-            Cell cell11= row0.createCell(11);
-            Cell cell12= row0.createCell(12);
-            Cell cell13= row0.createCell(13);
-            Cell cell14= row0.createCell(14);
-            Cell cell15= row0.createCell(15);
-            Cell cell16= row0.createCell(16);
-            Cell cell17= row0.createCell(17);
+            Cell cell11 = row0.createCell(11);
+            Cell cell12 = row0.createCell(12);
+            Cell cell13 = row0.createCell(13);
+            Cell cell14 = row0.createCell(14);
+            Cell cell15 = row0.createCell(15);
+            Cell cell16 = row0.createCell(16);
+            Cell cell17 = row0.createCell(17);
             Cell cell18 = row0.createCell(18);
             Cell cell19 = row0.createCell(19);
-
-
 
 
             cell0.setCellStyle(style0);
@@ -393,7 +337,6 @@ public class VisitorPassController {
             cell17.setCellStyle(style0);
             cell18.setCellStyle(style0);
             cell19.setCellStyle(style0);
-
 
 
             cell0.setCellValue("name");
@@ -430,21 +373,19 @@ public class VisitorPassController {
                 Cell cell151 = row1.createCell(4);
                 Cell cell161 = row1.createCell(5);
                 Cell cell171 = row1.createCell(6);
-                Cell cell181= row1.createCell(7);
+                Cell cell181 = row1.createCell(7);
                 Cell cell191 = row1.createCell(8);
-                Cell cell201= row1.createCell(9);
+                Cell cell201 = row1.createCell(9);
                 Cell cell211 = row1.createCell(10);
                 Cell cell221 = row1.createCell(11);
-                Cell cell231= row1.createCell(12);
+                Cell cell231 = row1.createCell(12);
                 Cell cell241 = row1.createCell(13);
-                Cell cell251= row1.createCell(14);
+                Cell cell251 = row1.createCell(14);
                 Cell cell261 = row1.createCell(15);
                 Cell cell271 = row1.createCell(16);
                 Cell cell281 = row1.createCell(17);
                 Cell cell291 = row1.createCell(18);
                 Cell cell301 = row1.createCell(19);
-
-
 
 
                 cell111.setCellStyle(style1);
@@ -467,8 +408,6 @@ public class VisitorPassController {
                 cell281.setCellStyle(style1);
                 cell291.setCellStyle(style1);
                 cell301.setCellStyle(style1);
-
-
 
 
                 cell111.setCellValue(visitorPass.getName());
@@ -503,6 +442,7 @@ public class VisitorPassController {
         workbook.write(response1.getOutputStream());
 
     }
+
     /*
     @GetMapping("getWeekData")
     public Map<String,List<VisitorPass>>getWeekData(){
@@ -598,27 +538,27 @@ public class VisitorPassController {
 */
     @PostMapping("insertVisitorPass")
     public String getVisitorPass(@RequestBody VisitorPass visitorPass) throws IOException, WriterException {
-        String message="Successful";
-        Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String message = "Successful";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         visitorPass.setDate(sdf.format(date));
-        VisitorPass visitorPass1=visitorPassRepository.save(visitorPass);
-        if(!visitorPass1.getId().isEmpty()){
-            message="inserted";
-            String visitor="{\"name\":\""+visitorPass.getName()+"\",\"phone_no\":\""+visitorPass.getPhone_no()+"\"" +
-                    ",\"whom_to_meet\":\""+visitorPass.getWhom_to_meet()+"\",\"purpose_of_visit\":\""+visitorPass.getPurpose_of_visit()+"\"" +
-                    ",\"email\":\""+visitorPass.getEmail()+"\"" +
-                    ",\"id\":\""+visitorPass1.getId()+"\",\"gender\":\""+visitorPass.getGender()+"\"," +
-                    "\"profession\":\""+visitorPass.getProfession()+"\",\"department\":\""+visitorPass.getDepartment()+"\"," +
-                    "\"nationality\":\""+visitorPass.getNationality()+"\",\"pass_no\":\""+visitorPass.getPass_no()+"\"," +
-                    "\"id_type\":\""+visitorPass.getId_type()+"\",\"id_no\":\""+visitorPass.getId_no()+"\"," +
-                    "\"no_of_visitors\":\""+visitorPass.getNo_of_visitors()+"\",\"address\":\""+visitorPass.getAddress()+"\"," +
-                    "\"item_carried\":\""+visitorPass.getItem_carried()+"\",\"serial_no\":\""+visitorPass.getSerial_no()+"\"}";
+        VisitorPass visitorPass1 = visitorPassRepository.save(visitorPass);
+        if (!visitorPass1.getId().isEmpty()) {
+            message = "inserted";
+            String visitor = "{\"name\":\"" + visitorPass.getName() + "\",\"phone_no\":\"" + visitorPass.getPhone_no() + "\"" +
+                    ",\"whom_to_meet\":\"" + visitorPass.getWhom_to_meet() + "\",\"purpose_of_visit\":\"" + visitorPass.getPurpose_of_visit() + "\"" +
+                    ",\"email\":\"" + visitorPass.getEmail() + "\"" +
+                    ",\"id\":\"" + visitorPass1.getId() + "\",\"gender\":\"" + visitorPass.getGender() + "\"," +
+                    "\"profession\":\"" + visitorPass.getProfession() + "\",\"department\":\"" + visitorPass.getDepartment() + "\"," +
+                    "\"nationality\":\"" + visitorPass.getNationality() + "\",\"pass_no\":\"" + visitorPass.getPass_no() + "\"," +
+                    "\"id_type\":\"" + visitorPass.getId_type() + "\",\"id_no\":\"" + visitorPass.getId_no() + "\"," +
+                    "\"no_of_visitors\":\"" + visitorPass.getNo_of_visitors() + "\",\"address\":\"" + visitorPass.getAddress() + "\"," +
+                    "\"item_carried\":\"" + visitorPass.getItem_carried() + "\",\"serial_no\":\"" + visitorPass.getSerial_no() + "\"}";
 
             QRCodeGenerator.generateQRCodeImage(visitor, 200,
-                    200, "./src/main/resources/"+visitorPass.getName()+".png");
-            QrCode qrCode=new QrCode();
-            qrCode.setCode("./src/main/resources/"+visitorPass.getName()+".png");
+                    200, "./src/main/resources/" + visitorPass.getName() + ".png");
+            QrCode qrCode = new QrCode();
+            qrCode.setCode("/src/main/resources/" + visitorPass.getName() + ".png");
             qrCode.setMobile_no(visitorPass.getPhone_no());
             qrcodeRepository.save(qrCode);
         }
@@ -626,48 +566,72 @@ public class VisitorPassController {
     }
 
     @GetMapping("getTodayData")
-    public Map<String,List<VisitorPass>> getTodayData(){
+    public Map<String, List<VisitorPass>> getTodayData() {
 
-        Date date= new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        List<VisitorPass>list=visitorPassRepository.getTodayData(sdf.format(date));
-        HashMap<String,List<VisitorPass>>hMap=new HashMap<>();
-        hMap.put("todayData",list);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<VisitorPass> list = visitorPassRepository.getTodayData(sdf.format(date));
+        HashMap<String, List<VisitorPass>> hMap = new HashMap<>();
+        hMap.put("todayData", list);
         return hMap;
     }
 
     @GetMapping("getDateData")
-    public Map<String,List<VisitorPass>>getDateData(@RequestParam("date")String date){
-        List<VisitorPass>list=visitorPassRepository.getTodayData(date);
-        HashMap<String,List<VisitorPass>>hMap=new HashMap<>();
-        hMap.put("dateData",list);
+    public Map<String, List<VisitorPass>> getDateData(@RequestParam("date") String date) {
+        List<VisitorPass> list = visitorPassRepository.getTodayData(date);
+        HashMap<String, List<VisitorPass>> hMap = new HashMap<>();
+        hMap.put("dateData", list);
         return hMap;
     }
 
-    @PostMapping("getUpdated")
-    public String getUpdated( @RequestParam("photo") MultipartFile multipartFile,
-                            @RequestParam("id")String id,
-                             @RequestParam("status")String status)throws IOException {
-        String message="Updated";
-        Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    @PostMapping("photoUpdate")
+    public String getUpdated(@RequestParam("photo") MultipartFile multipartFile,
+                             @RequestParam("id") String id
+
+                             ) throws IOException, WriterException {
+        String message = "Updated";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         Update update = new Update();
         update.set("photo", new Binary(BsonBinarySubType.BINARY, multipartFile.getBytes()));
-        update.set("status", status);
-        update.set("check_in",sdf.format(date));
+        update.set("status", "active");
+        update.set("check_in", sdf.format(date));
 
         mongoTemplate.updateMulti(query, update, VisitorPass.class);
+        List<VisitorPass>list=visitorPassRepository.getDetails(id,"active");
+        if(list.size()>0){
+
+            String visitor = "{\"name\":\"" + list.get(0).getName() + "\",\"phone_no\":\"" + list.get(0).getPhone_no() + "\"" +
+                    ",\"whom_to_meet\":\"" + list.get(0).getWhom_to_meet() + "\",\"purpose_of_visit\":\"" + list.get(0).getPurpose_of_visit() + "\"" +
+                    ",\"email\":\"" + list.get(0).getEmail() + "\"" +
+                    ",\"id\":\"" + list.get(0).getId() + "\",\"gender\":\"" + list.get(0).getGender() + "\"," +
+                    "\"profession\":\"" + list.get(0).getProfession() + "\",\"department\":\"" + list.get(0).getDepartment() + "\"," +
+                    "\"nationality\":\"" + list.get(0).getNationality() + "\",\"pass_no\":\"" + list.get(0).getPass_no() + "\"," +
+                    "\"id_type\":\"" + list.get(0).getId_type() + "\",\"id_no\":\"" + list.get(0).getId_no() + "\"," +
+                    "\"no_of_visitors\":\"" + list.get(0).getNo_of_visitors() + "\",\"address\":\"" + list.get(0).getAddress() + "\"," +
+                    "\"item_carried\":\"" + list.get(0).getItem_carried() + "\",\"serial_no\":\"" + list.get(0).getSerial_no() + "\"," +
+                    "\"photo\":\""+list.get(0).getPhoto()+"\",\"status\":\""+list.get(0).getStatus()+"\"," +
+                    "\"check_in\":\""+list.get(0).getCheck_in()+"\"}";
+
+
+            QRCodeGenerator.generateQRCodeImage(visitor, 200,
+                    200, "./src/main/resources/" + list.get(0).getName() + ".png");
+
+
+
+        }
+
         return message;
 
     }
 
     @PostMapping("getVisitorUpdated")
-    public String getStatusUpdated(@RequestParam("id")String id,
-                                 @RequestParam("status")String status){
-        String message="Updated";
+    public String getStatusUpdated(@RequestParam("id") String id,
+                                   @RequestParam("status") String status) {
+        String message = "{\"message\":\" Updated \"}";
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         Update update = new Update();
@@ -677,16 +641,15 @@ public class VisitorPassController {
     }
 
     @PostMapping("getCheckOutUpdate")
-    public String getCheckOutUpdated(@RequestParam("id")String id,
-                                   @RequestParam("status")String status){
+    public String getCheckOutUpdated(@RequestParam("id") String id ) {
 
-            String message="Updated";
-        Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String message = "{\"message\":\" Updated \"}";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         Update update = new Update();
-        update.set("status", status);
+        update.set("status","out");
         update.set("check_out", sdf.format(date));
         mongoTemplate.updateMulti(query, update, VisitorPass.class);
         return message;
@@ -694,31 +657,72 @@ public class VisitorPassController {
 
 
     @GetMapping("getTodayCheckIn")
-    public Map<String,List<VisitorPass>>getCheckInData(){
-        Date date= new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        List<VisitorPass>list=visitorPassRepository.getVisitorActiveStatus("active", sdf.format(date));
+    public Map<String, List<VisitorPass>> getCheckInData() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<VisitorPass> list = visitorPassRepository.getVisitorActiveStatus("active", sdf.format(date));
 
-        HashMap<String,List<VisitorPass>>hMap=new HashMap<>();
-        hMap.put("checkIn",list);
+        HashMap<String, List<VisitorPass>> hMap = new HashMap<>();
+        hMap.put("checkIn", list);
         return hMap;
 
     }
+
     @GetMapping("getAllVisitor")
-    public Map<String,List<VisitorPass>>getALlData(){
-        List<VisitorPass>list=visitorPassRepository.findAll();
-        HashMap<String,List<VisitorPass>>hMap=new HashMap<>();
-        hMap.put("AllData",list);
+    public Map<String, List<VisitorPass>> getALlData() {
+        List<VisitorPass> list = visitorPassRepository.findAll();
+        HashMap<String, List<VisitorPass>> hMap = new HashMap<>();
+        hMap.put("AllData", list);
         return hMap;
     }
 
     @GetMapping("getCloseStatusList")
-    public Map<String,List<VisitorPass>>getCloseStatus(){
-        List<VisitorPass>list=visitorPassRepository.getCloseStatus("close");
-        HashMap<String,List<VisitorPass>>hMap=new HashMap<>();
-        hMap.put("closeData",list);
+    public Map<String, List<VisitorPass>> getCloseStatus() {
+        List<VisitorPass> list = visitorPassRepository.getCloseStatus("close");
+        HashMap<String, List<VisitorPass>> hMap = new HashMap<>();
+        hMap.put("closeData", list);
         return hMap;
     }
+
+    /*@GetMapping("getBarcode")
+    public byte[] getPhoneNo(@RequestParam("phone_no")String phone_no) throws IOException {
+        List<VisitorPass> list = visitorPassRepository.getPhoneNo(phone_no);
+       InputStream in=null;
+        if (list.size() > 0) {
+             in = getClass()
+                    .getResourceAsStream("C:\\Users\\Dell\\Desktop\\vms\\src\\main\\resources\\QRCode.png");
+        }
+        return IOUtils.toByteArray(in);
+
+    }*/
+
+    @GetMapping(value = "/image")
+    @ResponseBody
+    public HttpEntity<byte[]> getImage(@RequestParam("phone_no") String phone_no) throws IOException {
+        List<QrCode> getAbsFile = qrcodeRepository.getQrCode(phone_no);
+        String urlPath = "";
+        if (getAbsFile.size() > 0) {
+            urlPath = getAbsFile.get(0).getCode();
+
+
+            Path rootDIr = Paths.get(".").normalize().toAbsolutePath();
+
+            File file = new File(
+                    rootDIr.getParent() + "\\" + rootDIr.getFileName()
+                            + urlPath);
+            byte[] bytes = FileUtils.readFileToByteArray(file);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+            headers.setContentLength(bytes.length);
+            System.out.println();
+
+
+            return new HttpEntity<byte[]>(bytes, headers);
+        } else {
+            return null;
+        }
+    }
+
 
 }
 

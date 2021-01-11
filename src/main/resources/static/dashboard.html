@@ -1,0 +1,190 @@
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .font {
+            font-size: 80px;
+        }
+
+        .font2 {
+            font-size: 30px;
+
+        }
+    </style>
+</head>
+
+<body style="background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);">
+    <div style="height:750px;background: rgba(255 ,255 ,255 ,0.7);">
+        <nav class="navbar navbar-expand-lg navbar-dark"
+            style="background-image: linear-gradient(to right top, #5c636f, #606d7e, #62788d, #62839c, #608faa);">
+            <a class="navbar-brand" href="#"><img src="images/1.png" height="70px" width="70px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" style="font-size: 17px;">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active" href="visitor.html">Visitor <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="carrier.html">Carrier</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="visitorlist.html">Visitors List</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="carrierlist.html">Carrier List</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="barcode.html">Barcode</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="excel.html">Report</a>
+                    </li>
+
+                </ul>
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+
+        <div class="container-fluid  mt-4 ">
+
+            <div style="background: rgba(255 ,255 ,255 0.8);">
+                <div class="back-div">
+                    <div style="background: rgba(255 ,255 ,255 ,0.6);">
+                        <div class="row text-center" style="width:97%;padding-left: 60px;">
+                            <div class="col-md-6" style="padding-bottom: 10px;">
+                                <div class="row text-center">
+                                    <div class="col-md-12">
+                                        <h4>Visitor</h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6 pb-3">
+                                        <div class="card" style="min-width: auto;height: 230px;">
+                                            <div class="card-body card-shadow">
+                                                <p class="font2">Today's Check In</p>
+                                                <p class="font">1</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card" style="min-width: auto;height: 230px;">
+                                            <div class="card-body card-shadow">
+                                                <p class="font2">Total Visit</p>
+                                                <p class="font">1</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-6 pb-3">
+                                        <div class="card" style="width: auto;height: 230px;">
+                                            <div class="card-body card-shadow">
+                                                <p class="font2">Today Visit</p>
+                                                <p class="font">1</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card" style="min-width: auto;height: 230px;">
+                                            <div class="card-body card-shadow">
+                                                <p class="font2">Total Out</p>
+                                                <p class="font">0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row text-center">
+                                    <div class="col-md-12">
+                                        <h4>Carrier</h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6 pb-3">
+                                        <div class="card" style="min-width: auto;height: 230px;">
+                                            <div class="card-body card-shadow">
+                                                <p class="font2">Today's Check In</p>
+                                                <p class="font">3</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card" style="min-width: auto;height: 230px;">
+                                            <div class="card-body card-shadow">
+                                                <p class="font2">Total Visit</p>
+                                                <p class="font">3</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-6 pb-3">
+                                        <div class="card" style="width: auto;height: 230px;">
+                                            <div class="card-body card-shadow">
+                                                <p class="font2">Today Visit</p>
+                                                <p class="font">3</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card" style="min-width: auto;height: 230px;">
+                                            <div class="card-body card-shadow">
+                                                <p class="font2">Total Out</p>
+                                                <p class="font">1</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="images/1.png" height="auto" width="100px" class="watermark">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function logout() {
+            sessionStorage.clear();
+            location.href = "login.html";
+        }
+
+
+        if (sessionStorage.getItem("empId") == null) {
+            window.open("login.html", "_self");
+        }
+    </script>
+</body>
+
+</html>

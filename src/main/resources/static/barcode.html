@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <style>
+        .input-field{
+            height: 50px;
+            width: 500px;
+            border-radius: 50px;
+            text-align: center;
+        }
+        .input-field:focus{
+            height:50px;
+            width: 500px;
+            border-radius: 50px;
+            outline: none;
+        }
+        button{
+            background: #ffffff00;
+        }
+        button:focus{
+            outline: none;
+            background: #ffffff00;
+        }
+        .watermark
+        {
+        position:fixed;
+        bottom:5px;
+        right:15px;
+        opacity:0.5;
+        z-index:99;
+        color:white;
+        }
+        input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+       @media only screen and (max-width: 600px) {
+            .input-field{
+                height: 50px;
+                width:300px;
+                border-radius: 50px;
+            }
+            button{
+            background: #ffffff00;
+        }
+        button:focus{
+            outline: none;
+            background: #ffffff00;
+        }
+        .input-field:focus{
+            height:50px;
+            width: 300px;
+            border-radius: 50px;
+            outline: none;
+        }
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-image: linear-gradient(to right top, #5c636f, #606d7e, #62788d, #62839c, #608faa);">
+        <a class="navbar-brand" href="#"><img src="images/1.png" height="70px" width="70px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto" style="font-size: 17px;">
+            <li class="nav-item active">
+              <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link active" href="visitor.html">Visitor <span class="sr-only">(current)</span></a>            
+              </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="carrier.html">Carrier</a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link active" href="visitorlist.html">Visitors List</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" href="carrierlist.html">Carrier List</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="barcode.html">Barcode</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="excel.html">Report</a>
+              </li>
+
+          </ul>
+          <button class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </nav>
+      <div class="container-fluid text-center" style="background: url(./images/search1.png);background-size: cover;height:700px">
+         <div style="background: rgba(255,255,255,0.7);height:700px">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 text-center mt-4">
+                        <p class="display-4" style="color: red;">
+                            Enter Contact No To Generate Qr
+                        </p>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>   
+
+                 <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8" style="padding-top: 80px;">
+                          <input type="Number" class="input-field" id="phone_no">
+                          <button onclick="barcode()" style="position: absolute;padding-left: 5px;border: none;"><i class="fas fa-search fa-3x" style="color:#35ad35"></i></button>
+                        </div>
+                      <div class="col-md-2">
+                          <button class="btn btn-success" id="popup" data-toggle="modal" data-target="#exampleModal" style="display: none;">click</button>
+                      </div>
+                </div>
+
+             </div> 
+               <img src="images/1.png" height="auto" width="100px" class="watermark" >
+        </div>
+      </div>
+      <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Qr Code</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div  class="col-md-12  text-center">
+                        Scan Qr To Get Information<br>
+                        <img src="" id="image" height="200px" width="200px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      <script>
+              function logout() {
+            sessionStorage.clear();
+            location.href = "login.html";
+        }
+
+
+        if (sessionStorage.getItem("empId") == null) {
+            window.open("login.html", "_self");
+        }
+        
+           function barcode(){
+              var phone_no= document.getElementById("phone_no").value;
+               fetch("http://localhost:8102/image?phone_no="+phone_no,{"method":"GET"})
+               .then(response=>{
+                   return response.text();
+                //    console.log(response);
+               })
+               .then(qr=>{
+                   console.log(qr);  
+                  
+                  
+                   if(qr==""){
+                       alert("please enter correct mobile number")
+                   }
+                   else{
+                    document.getElementById("image").src="http://localhost:8102/image?phone_no="+phone_no; 
+                    document.getElementById("popup").click();
+                   }
+               })
+               .catch(err=>{
+                   console.log(err);
+               })
+           }
+
+           
+      </script>
+</body>
+</html>

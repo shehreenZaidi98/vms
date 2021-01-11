@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <style>
+   
+      .box{
+        height:auto;
+        width: auto;
+        background: #edeeedd6;
+        box-shadow: 0px 0px 3px 3px #ccc;
+        border-radius: 5px;
+      }
+      .watermark
+{
+ position:fixed;
+ bottom:5px;
+ right:15px;
+ opacity:0.5;
+ z-index:99;
+ color:white;
+}
+  </style>
+  </head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-image: linear-gradient(to right top, #5c636f, #606d7e, #62788d, #62839c, #608faa);">
+        <a class="navbar-brand" href="#"><img src="images/1.png" height="70" width="70px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto" style="font-size: 17px;"> 
+            <li class="nav-item active">
+              <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link active" href="visitor.html">Visitor <span class="sr-only">(current)</span></a>            
+              </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="carrier.html">Carrier</a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link active" href="visitorlist.html">Visitors List</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" href="carrierlist.html">Carrier List</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="barcode.html">Barcode</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="excel.html">Report</a>
+              </li>
+
+          </ul>
+          <button class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </nav>
+      <div class="container-fluid mt-3"style="overflow-x:scroll" >
+          <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <table id="table" border="1" width="2500px" style="overflow-x:auto;overflow-x:scroll;">
+                       
+                       
+                    </table>
+                </div>
+            </div>
+          </div>
+          <img src="images/1.png" height="auto" width="100px"  class="watermark">
+      </div>
+      <script>
+                function logout() {
+            sessionStorage.clear();
+            location.href = "login.html";
+        }
+
+
+        if (sessionStorage.getItem("empId") == null) {
+            window.open("login.html", "_self");
+        }
+        
+
+           function carrierlist(){
+             fetch("http://localhost:8102/getAllCarrier",{"method":"GET"})
+             .then(response=>{
+                return response.json();
+             })
+             .then(data=>{
+               console.log(data);
+               document.getElementById("table").innerHTML+=
+                      "<tr style='background: #80deea;height:40px'>"+
+                          "<th>Driver Name</th>"+
+                          "<th>Licence No</th>"+
+                          "<th>Appointment with</th>"+
+                          "<th>Purpose</th>"+
+                          "<th>gender</th>"+
+                          "<th>Nationality</th>"+
+                          "<th>email</th>"+
+                          "<th>Mobile No</th>"+
+                          "<th>Pass No</th>"+
+                          "<th>Id Type</th>"+
+                          "<th>Id Number</th>"+
+                          "<th>No Of Visitors</th>"+
+                          "<th>Address</th>"+
+                          "<th>Item Carried</th>"+
+                          "<th>Serial No</th>"+
+                          "<th>Status</th>"+
+                          "<th>Vehicle</th>"+
+                          "<th>Vehicle No</th>"+
+                        "</tr>"
+                 for(var i=0;i<data.AllData.length;i++){
+                  document.getElementById("table").innerHTML+=
+                  "<tr style='background:#ff124;height:40px;'>"+
+                          "<td>"+data.AllData[i].driver_name+"</td>"+
+                          "<td>"+data.AllData[i].lic_no+"</td>"+
+                          "<td>"+data.AllData[i].whom_to_meet+"</td>"+
+                          "<td>"+data.AllData[i].purpose_of_visit+"</td>"+
+                          "<td>"+data.AllData[i].gender+"</td>"+
+                          "<td>"+data.AllData[i].nationality+"</td>"+
+                          "<td>"+data.AllData[i].email+"</td>"+
+                          "<td>"+data.AllData[i].mobile_no+"</td>"+
+                          "<td>"+data.AllData[i].pass_no+"</td>"+
+                          "<td>"+data.AllData[i].id_type+"</td>"+
+                          "<td>"+data.AllData[i].id_no+"</td>"+
+                          "<td>"+data.AllData[i].no_of_visitors+"</td>"+
+                          "<td>"+data.AllData[i].address+"</td>"+
+                          "<td>"+data.AllData[i].item_carried+"</td>"+
+                          "<td>"+data.AllData[i].serial_no+"</td>"+
+                          "<td>"+data.AllData[i].status+"</td>"+
+                          "<td>"+data.AllData[i].vehicle+"</td>"+
+                          "<td>"+data.AllData[i].vehicle_no+"</td>"+
+                        "</tr>"
+                       
+                 }       
+             })
+             .catch(err=>{
+               console.log(err)
+             })
+            }
+            carrierlist();
+      </script>
+  </body>
+
+</html>

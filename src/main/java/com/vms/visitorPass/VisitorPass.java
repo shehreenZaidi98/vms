@@ -11,7 +11,6 @@ public class VisitorPass {
     private String name;
     private String phone_no;
     private String email;
-
     private String purpose_of_visit;
     private String whom_to_meet;
     private String date;

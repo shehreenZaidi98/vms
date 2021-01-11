@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>visitor form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <style>
+        .background {
+            background: url("images/carr.png");
+            height: 700px;
+            width: 100%;
+            background-size: cover;
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 5px;
+            right: 15px;
+            opacity: 0.5;
+            z-index: 99;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-image: linear-gradient(to right top, #5c636f, #606d7e, #62788d, #62839c, #608faa);">
+        <a class="navbar-brand" href="#"><img src="images/1.png" height="70px" width="70px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" style="font-size: 17px;">
+                <li class="nav-item active">
+                    <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active" href="visitor.html">Visitor <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="carrier.html">Carrier</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="visitorlist.html">Visitors List</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="carrierlist.html">Carrier List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="barcode.html">Barcode</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="excel.html">Report</a>
+                </li>
+            </ul>
+            <button class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+    <div class="container-fluid background">
+        <div style="background:#f9f7f7db;height:750px">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <h2 style="margin-top: 20px;">Carrier Information</h2>
+                </div>
+            </div>
+            <div class="container mt-2 text-center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" style="background: #fff9;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Driver Name</div>
+                                            <div class="col-md-6"><input type="text" class="form-control" id="name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">gender</div>
+                                            <div class="col-md-6">
+                                                <select id="gender" class="form-control">
+                                                    <option>Male</option>
+                                                    <option>female</option>
+                                                    <option>Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Mobile number</div>
+                                            <div class="col-md-6"><input type="number" class="form-control"
+                                                    id="visitor_mobile"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row mt-5">
+
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Vehicle Type</div>
+                                            <div class="col-md-6"><input type="text" class="form-control"
+                                                    id="vehicle_type"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Vehicle No</div>
+                                            <div class="col-md-6"><input type="text" class="form-control"
+                                                    id="vehicle_no"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Licence No</div>
+                                            <div class="col-md-6"><input type="text" class="form-control" id="lic_no">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-5">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">email</div>
+                                            <div class="col-md-6"><input type="email" class="form-control" id="email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Id Type</div>
+                                            <div class="col-md-6">
+                                                <select id="id_type" class="form-control">
+                                                    <option>Aadhar</option>
+                                                    <option>Passport</option>
+                                                    <option>Driving Licence</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Id Number</div>
+                                            <div class="col-md-6"><input type="text" class="form-control" id="id_no">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-5">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Nationality</div>
+                                            <div class="col-md-6"><input type="text" class="form-control"
+                                                    id="nationality"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Address</div>
+                                            <div class="col-md-6"><input type="text" class="form-control" id="address">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Pass no</div>
+                                            <div class="col-md-6"><input type="text" class="form-control" id="pass_no">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-5">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Status</div>
+                                            <div class="col-md-6"><input type="text" class="form-control" id="status">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Purpose</div>
+                                            <div class="col-md-6"><input type="text" class="form-control" id="purpose">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">No of Visitors</div>
+                                            <div class="col-md-6"><input type="number" class="form-control"
+                                                    id="no_of_visitor"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-5">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Appointment With</div>
+                                            <div class="col-md-6"><input type="text" class="form-control"
+                                                    id="appointment"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Item Carried</div>
+                                            <div class="col-md-6"><input type="text" class="form-control"
+                                                    id="ItemCarried"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">Serial No</div>
+                                            <div class="col-md-6"><input type="text" class="form-control" id="serialNo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-success" onclick="validation()"
+                                            style="width:100%">Book Visit</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <img src="images/1.png" height="auto" width="100px" class="watermark">
+        </div>
+    </div>
+    <script>
+             function logout() {
+            sessionStorage.clear();
+            location.href = "login.html";
+        }
+
+
+        if (sessionStorage.getItem("empId") == null) {
+            window.open("login.html", "_self");
+        }
+        
+        //validation
+        function validation() {
+            var driver_name = document.getElementById("name").value;
+            var appointment = document.getElementById("appointment").value;
+            var purpose = document.getElementById("purpose").value;
+            var gender = document.getElementById("gender").value;
+            var nationality = document.getElementById("nationality").value;
+            var status = document.getElementById("status").value;
+            var visitor_mobile = document.getElementById("visitor_mobile").value;
+            var pass_no = document.getElementById("pass_no").value;
+            var id_type = document.getElementById("id_type").value;
+            var id_no = document.getElementById("id_no").value;
+            var no_of_visitor = document.getElementById("no_of_visitor").value;
+            var address = document.getElementById("address").value;
+            var ItemCarried = document.getElementById("ItemCarried").value;
+            var serialNo = document.getElementById("serialNo").value;
+            var email = document.getElementById("email").value;
+            var vehicle_no = document.getElementById("vehicle_no").value;
+            var vehicle_type = document.getElementById("vehicle_type").value;
+            var lic_no = document.getElementById("lic_no").value;
+
+            // if all fields null && other validation
+            if (driver_name == "" || appointment == "" || purpose == "" ||  nationality == "" || status == "" ||
+                visitor_mobile == "" || pass_no == "" || id_no == "" || no_of_visitor == "" || address == "" ||
+                ItemCarried == "" || serialNo == "" || email == "" || id_type == "" || gender == "" || vehicle_no == ""
+                || vehicle_type == "" || lic_no == "") {
+                validate(email);
+                mobile_validation(visitor_mobile);
+                alert("All fields are necessary");
+            }
+
+            //submission of data
+            else {
+                var jsonData = {
+                    "driver_name": driver_name,
+                    "mobile_no": visitor_mobile,
+                    "email": email,
+                    "purpose_of_visit": purpose,
+                    "whom_to_meet": appointment,
+                    "gender": gender,
+                    "nationality": nationality,
+                    "pass_no": pass_no,
+                    "id_type": id_type,
+                    "id_no": id_no,
+                    "no_of_visitors": no_of_visitor,
+                    "address": address,
+                    "item_carried": ItemCarried,
+                    "serial_no": serialNo,
+                    "vehicle": vehicle_type,
+                    "vehicle_no": vehicle_no,
+                    "lic_no": lic_no
+                }
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                    }
+                };
+                xhttp.open("POST", "http://localhost:8102/insertCarrier", true);
+                xhttp.setRequestHeader("Content-Type", "application/json")
+                xhttp.send((JSON.stringify(jsonData)));
+                alert("Record Inserted Successful")
+            }
+        }
+
+        //email validation
+        function validate(email) {
+            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            //var address = document.getElementById[email].value;
+            if (reg.test(email) == false) {
+                alert('Invalid Email Address');
+                return (false);
+            }
+        }
+
+        //mobile no validation
+        function mobile_validation(visitor_mobile) {
+            if (visitor_mobile.length == 10) {
+                // console.log("ok");
+            }
+            else {
+                alert("please Enter 10 digit number")
+            }
+        }
+    </script>
+</body>
+
+</html>

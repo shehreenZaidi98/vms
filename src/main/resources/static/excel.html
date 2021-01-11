@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></script> -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <style>
+        .input-field{
+            height: 50px;
+            width: 500px;
+            border-radius: 50px;
+            text-align: center;
+        }
+        .input-field:focus{
+            height:50px;
+            width: 500px;
+            border-radius: 50px;
+            outline: none;
+        }
+        button{
+            background: #ffffff00;
+        }
+        button:focus{
+            outline: none;
+            background: #ffffff00;
+        }
+        .watermark
+        {
+            position:fixed;
+            bottom:5px;
+            right:15px;
+            opacity:0.5;
+            z-index:99;
+            color:white;
+        }
+        .range{
+            height:40px;
+            width: 200px;
+            border-radius:5px ;
+        }
+        input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+       @media only screen and (max-width: 600px) {
+            .input-field{
+                height: 50px;
+                width:300px;
+                border-radius: 50px;
+            }
+            button{
+            background: #ffffff00;
+        }
+        button:focus{
+            outline: none;
+            background: #ffffff00;
+        }
+        .input-field:focus{
+            height:50px;
+            width: 300px;
+            border-radius: 50px;
+            outline: none;
+        }
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-image: linear-gradient(to right top, #5c636f, #606d7e, #62788d, #62839c, #608faa);">
+        <a class="navbar-brand" href="#"><img src="images/1.png" height="70px" width="70px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto" style="font-size: 17px;">
+            <li class="nav-item active">
+              <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link active" href="visitor.html">Visitor <span class="sr-only">(current)</span></a>            
+              </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="carrier.html">Carrier</a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link active" href="visitorlist.html">Visitors List</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" href="carrierlist.html">Carrier List</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="barcode.html">Barcode</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="excel.html">Report</a>
+              </li>
+
+          </ul>
+          <button class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </nav>
+      <div class="container-fluid text-center" style="background: url(./images/download.png);background-size: cover;height:700px;">
+         <div style="background: rgba(255,255,255,0.8);height:700px">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 text-center mt-4">
+                        <p class="display-4" style="color:red">
+                            Click The Buttons To Generate Excel
+                        </p>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>   
+                    <hr>
+                   <div class="row mt-3 text-center">
+                        <div class="col-md-6">
+                            <p style="font-size: 30px;color: red;">From</p>
+                            <input type="date" id="from" class="range">
+                        </div>
+                        <div class="col-md-6">
+                            <p style="font-size: 30px;color:red">To</p>
+                            <input type="date" id="to" max="2021-01-05" class="range">
+                        </div>
+                   </div> 
+                 <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8" style="padding-top: 80px;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                   
+                                    <button class="btn btn-danger mb-2" style="height:100px;width: 200px;" onclick="generate_visitor_excel()"><p>Download Visitor Excel</p>
+                                        <i class="fas fa-download fa-2x" style="color:#3fefde"></i>
+                                    </button>
+                                
+                                </div>
+                                <div class="col-md-6">
+                                   
+                                    <button class="btn btn-danger" style="height:100px;width: 200px;" onclick="generate_carrier_excel()"><p>Download Carrier Excel</p>
+                                        <i class="fas fa-download fa-2x" style="color:#3fefde"></i>
+                                    </button>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                      <div class="col-md-2"></div>
+                </div>
+
+             </div> 
+               <img src="images/1.png" height="auto" width="100px" class="watermark" >
+        </div>
+      </div>
+     
+
+      <script>
+           document.getElementById("to").max=$.datepicker.formatDate('yy-mm-dd', new Date());
+
+           function logout() {
+            sessionStorage.clear();
+            location.href = "login.html";
+        }
+
+
+        if (sessionStorage.getItem("empId") == null) {
+            window.open("login.html", "_self");
+        }
+        
+           //visitor Excel
+           function generate_visitor_excel(){
+              var from= document.getElementById("from").value;
+              var to=document.getElementById("to").value;
+            location.href="http://localhost:8102/uploadExcel?date="+from+"&to="+to;
+        }
+
+        //carrier excel
+
+        function generate_carrier_excel(){
+            var from= document.getElementById("from").value;
+              var to=document.getElementById("to").value;
+           location.href="http://localhost:8102/uploadCarrierExcel?date="+from+"&to="+to; 
+        }
+
+       
+        //Is their authentication token still valid?
+      </script>
+</body>
+</html>
